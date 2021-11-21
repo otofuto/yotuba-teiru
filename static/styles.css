@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Rampart+One&family=Reggae+One&display=swap');
 body {
-    font-family: 'Kaisei Opti', serif;
+    font-family: 'Kaisei Tokumin', serif;
+    font-family: 'Rampart One', cursive;
+    font-family: 'Reggae One', cursive;
     display: flex;
     justify-content: space-around;
     margin: 0;
@@ -17,7 +19,7 @@ header {
 
 #header_opener {
     display: none;
-    background-image: url('/materials/humb.png');
+    background-image: url('/st/humb.png');
     background-position: center;
     background-size: 60%;
     background-repeat: no-repeat;
@@ -228,7 +230,7 @@ blockquote:after {
 
 #desc_liam label:after {
     content: '';
-    background-image: url('/materials/img/wing.svg');
+    background-image: url('/materials/img/clover.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;

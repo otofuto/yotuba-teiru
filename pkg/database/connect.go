@@ -2,23 +2,24 @@ package database
 
 import (
 	"database/sql"
-	"fmt"
 	"math"
 	"os"
 	"strings"
 
-	_ "github.com/go-sql-driver/mysql"
-	//"github.com/joho/godotenv"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 func Connect() *sql.DB {
-	//godotenv.Load()
+	_ = godotenv.Load()
 
-	connectionstring := os.Getenv("DB_USER") + ":" + os.Getenv("DB_PASS") + "@" + os.Getenv("DB_HOST") + "/" + os.Getenv("DB_NAME") + ""
-	db, err := sql.Open("mysql", connectionstring)
+	connectionstring := os.Getenv("DATABASE_URL")
+	if connectionstring == "" {
+		connectionstring = "host=127.0.0.1 port=5432 user=" + os.Getenv("DB_USER") + " password=" + os.Getenv("DB_PASS") + " dbname=" + os.Getenv("DB_NAME") + " sslmode=disable"
+	}
+	db, err := sql.Open("postgres", connectionstring)
 	if err != nil {
-		fmt.Println(connectionstring)
-		panic(err.Error)
+		panic(err.Error())
 	}
 
 	return db

@@ -49,7 +49,7 @@ func IndexHandle(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		db := database.Connect()
 		defer db.Close()
-		sql := "select id, `name`, comment, `datetime`, replyto from `comments` order by `id` limit 30"
+		sql := "select id, names, comment, dt, replyto from comments order by id limit 30"
 		rows, err := db.Query(sql)
 		msg := ""
 		if err != nil {
