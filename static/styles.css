@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Kaisei+Tokumin&family=Rampart+One&family=Reggae+One&display=swap');
 body {
     font-family: 'Kaisei Tokumin', serif;
-    font-family: 'Rampart One', cursive;
-    font-family: 'Reggae One', cursive;
     display: flex;
     justify-content: space-around;
     margin: 0;
     padding: 0;
-    --green: rgb(137, 175, 134);
-    --yellow: rgb(243, 234, 165);
+    --green: rgb(85, 121, 102);
+    --yellow: rgb(230, 244, 184);
     background-color: var(--yellow);
 }
 
@@ -184,7 +182,7 @@ blockquote:after {
     }
 }
 
-#bio_liam {
+#bio_teiru {
     opacity: 0;
     transition: all 1000ms 0ms ease;
     color: var(--green);
@@ -195,7 +193,7 @@ blockquote:after {
     flex-wrap: wrap;
 }
 
-#icon_liam {
+#icon_teiru {
     display: block;
     position: relative;
     opacity: 0;
@@ -205,32 +203,32 @@ blockquote:after {
     transition: all 500ms 0ms ease;
 }
 
-#icon_liam img {
+#icon_teiru img {
     width: 100%;
     max-width: 100%;
     max-height: 100%;
     border-radius: 5%;
 }
 
-#desc_liam {
+#desc_teiru {
     opacity: 0;
     transition: all 500ms 500ms ease;
 }
 
-#desc_liam label {
+#desc_teiru label {
     display: inline-block;
     position: relative;
-    background-color: rgba(0, 0, 0, 0.1);
-    width: 135px;
+    background-color: rgba(181, 230, 29, 0.3);
+    width: 145px;
     padding: 2px 5px;
     margin-left: 20px;
     margin-right: 20px;
     box-sizing: border-box;
 }
 
-#desc_liam label:after {
+#desc_teiru label:after {
     content: '';
-    background-image: url('/materials/img/clover.svg');
+    background-image: url('/st/img/clover.svg');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -242,7 +240,7 @@ blockquote:after {
 }
 
 @media screen and (max-width: 580px) {
-    #desc_liam label {
+    #desc_teiru label {
         display: block;
         margin: 0;
     }

@@ -12,24 +12,24 @@
         </script>
         <meta name="viewport" content="width=device-width">
         <meta name="description" content="beyV所属の新人Vライバー、陽津葉テイルです！">
-        <link rel="canonical" href="https://liam.otft.info/">
+        <link rel="canonical" href="https://yotuba-teiru.herokuapp.com/">
         <!-- Twitter cards -->
         <meta name="twitter:card" content="summary">
         <meta name="twitter:site" content="@Yotuba_Teiru">
         <meta name="twitter:creator:id" content="@Yotuba_Teiru">
         <meta name="twitter:title" content="陽津葉(よつば)テイル 非公式サイト">
         <meta name="twitter:description" content="beyV所属の新人Vライバー、陽津葉テイルです！">
-        <meta name="twitter:image" content="https://liam.otft.info/materials/img/icon.png?20210910">
-        <meta name="twitter:url" content="https://liam.otft.info/">
+        <meta name="twitter:image" content="https://yotuba-teiru.herokuapp.com/st/img/icon_mini.jpg?20211121">
+        <meta name="twitter:url" content="https://yotuba-teiru.herokuapp.com/">
         <!-- OGP -->
-        <meta property="og:url" content="https://liam.otft.info">
+        <meta property="og:url" content="https://yotuba-teiru.herokuapp.com/">
         <meta property="og:type" content="website">
         <meta property="og:title" content="陽津葉(よつば)テイル 非公式サイト">
         <meta property="og:description" content="beyV所属の新人Vライバー、陽津葉テイルです！">
         <meta property="og:site_name" content="陽津葉(よつば)テイル 非公式サイト">
-        <meta property="og:image" content="https://liam.otft.info/materials/img/icon.png?20210910">
+        <meta property="og:image" content="https://yotuba-teiru.herokuapp.com/st/img/icon_minijpg?20211121">
         <title>陽津葉(よつば)テイル 非公式サイト</title>
-        <link rel="stylesheet" href="/st/styles.css?20211121">
+        <link rel="stylesheet" href="/st/styles.css">
     </head>
     <body>
         <span id="header_opener" tabindex="0"></span>
@@ -64,7 +64,7 @@
                         <p><label>IRIAM初配信日</label>2021年10月21日</p>
                     </div>
                 </div>
-                <div id="topics" style="display: none;">
+                <div id="topics">
                     <h3>最新トピック</h3>
                 </div>
             </main>
@@ -129,10 +129,10 @@
                 document.getElementById('loading').remove();
                 document.getElementById('bio_teiru').removeAttribute('style');
                 document.getElementById('icon_desc').removeAttribute('style');
-                let liam = '陽津葉(よつば)テイル';
+                let charactername = '陽津葉(よつば)テイル';
                 document.getElementById('name_teiru').innerHTML = '';
                 let si = setInterval(() => {
-                    if (liam == '') {
+                    if (charactername == '') {
                         clearInterval(si);
                         document.getElementById('icon_teiru').style.opacity = 1;
                         document.getElementById('icon_teiru').style.left = 0;
@@ -148,15 +148,15 @@
                                 clearInterval(si);
                                 document.getElementsByTagName('h1')[0].style.transform = 'rotate(-3deg)';
                                 document.getElementsByTagName('h1')[0].style.textShadow = '2px 2px 2px var(--yellow)';
-                                document.getElementById('topics').style.display = 'block';
-                                document.getElementById('topics').style.opacity = 1;
+                                //document.getElementById('topics').style.display = 'block';
+                                //document.getElementById('topics').style.opacity = 1;
                             }
                         }, 100);
                     } else {
                         let spn = document.createElement('span');
                         spn.setAttribute('class', 'down');
-                        spn.innerText = liam.charAt(0);
-                        liam = liam.substring(1);
+                        spn.innerText = charactername.charAt(0);
+                        charactername = charactername.substring(1);
                         document.getElementById('name_teiru').appendChild(spn);
                     }
                 }, 100);
