@@ -1,0 +1,458 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaisei+Opti&display=swap');
+body {
+    font-family: 'Kaisei Opti', serif;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
+    --green: rgb(137, 175, 134);
+    --yellow: rgb(243, 234, 165);
+    background-color: var(--yellow);
+}
+
+header {
+    width: 160px;
+    transition: all 250ms 0ms ease;
+}
+
+#header_opener {
+    display: none;
+    background-image: url('/materials/humb.png');
+    background-position: center;
+    background-size: 60%;
+    background-repeat: no-repeat;
+}
+
+header div {
+    margin: 15px 5px;
+    display: none;
+    position: relative;
+    opacity: 0;
+    animation-name: down;
+    animation-delay: 0ms;
+    animation-timing-function: ease-out;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards;
+}
+
+header a {
+    display: inline-block;
+    width: 100%;
+    font-size: 20px;
+    color: var(--green);
+    font-weight: bold;
+    text-decoration: none;
+    user-select: none;
+}
+
+header div:after {
+    content: '';
+    display: block;
+    position: relative;
+    left: 50%;
+    width: 0%;
+    height: 2px;
+    background-color: var(--green);
+    transition: all 300ms 0ms ease;
+}
+
+header div:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+@media screen and (max-width: 812px) {
+    header {
+        position: fixed;
+        top: 105vh;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        z-index: 9998;
+        background-color: white;
+    }
+
+    #header_opener {
+        position: fixed;
+        display: block;
+        top: calc(100vh - 150px);
+        left: calc(100vw - 90px);
+        width: 60px;
+        height: 60px;
+        background-color: var(--green);
+        border-radius: 20px;
+        box-shadow: 3px 3px 3px silver;
+        z-index: 9997;
+    }
+
+    #header_opener:focus+header {
+        top: 0;
+    }
+
+    header a {
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+    }
+}
+
+#slider {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    flex-wrap: wrap;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+}
+
+h1 {
+    display: inline-block;
+    width: fit-content;
+    transition: all 1500ms 0ms ease;
+}
+
+main {
+    display: block;
+    width: 80%;
+    height: 100vh;
+    overflow: auto;
+    padding: 20px;
+    padding-bottom: 50px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 10px -5px black;
+    background-color: rgb(250, 250, 250);
+    scroll-snap-align: start;
+}
+
+main::-webkit-scrollbar {
+    display: none;
+}
+
+@media screen and (max-width: 812px) {
+    main {
+        width: 97%;
+    }
+}
+
+blockquote {
+    position: relative;
+    background-color: rgb(235, 235, 235);
+    width: fit-content;
+    height: max-content;
+}
+
+blockquote:after {
+    content: '<引用>';
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 100%;
+    color: rgba(100, 100, 0, 0.3);
+    font-size: 2em;
+    text-align: center;
+}
+
+.down {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    opacity: 1;
+    animation-name: down;
+    animation-delay: 0ms;
+    animation-timing-function: ease-out;
+    animation-duration: 300ms;
+}
+
+@keyframes down {
+    0% {
+        top: -20px;
+        opacity: 0;
+    }
+    
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+#bio_liam {
+    opacity: 0;
+    transition: all 1000ms 0ms ease;
+    color: var(--green);
+}
+
+#icon_desc {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#icon_liam {
+    display: block;
+    position: relative;
+    opacity: 0;
+    left: -30px;
+    width: 300px;
+    height: 300px;
+    transition: all 500ms 0ms ease;
+}
+
+#icon_liam img {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 5%;
+}
+
+#desc_liam {
+    opacity: 0;
+    transition: all 500ms 500ms ease;
+}
+
+#desc_liam label {
+    display: inline-block;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.1);
+    width: 135px;
+    padding: 2px 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+}
+
+#desc_liam label:after {
+    content: '';
+    background-image: url('/materials/img/wing.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    position: absolute;
+    left: calc(100% - 24px);
+    width: 24px;
+    height: 24px;
+}
+
+@media screen and (max-width: 580px) {
+    #desc_liam label {
+        display: block;
+        margin: 0;
+    }
+}
+
+#topics {
+    display: none;
+    position: relative;
+    padding: 12px;
+    border: solid 2px var(--green);
+    box-sizing: border-box;
+    border-radius: 8px;
+    opacity: 0;
+    transition: all 250ms 0ms ease;
+}
+
+#contents ul {
+    padding-inline-start: 0;
+}
+
+#contents li {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgb(241, 243, 244);
+    box-shadow: 0px 0px 4px aquamarine inset;
+    border-radius: 10px;
+}
+
+#contents li>span {
+    display: block;
+    font-weight: bold;
+    border-bottom: solid 1px silver;
+}
+
+#contents li>div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#contents audio {
+    margin-top: 2px;
+}
+
+#contents li time {
+    display: block;
+    text-align: right;
+    color: gray;
+    font-size: 0.8em;
+}
+
+#artsArea {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.artsBox {
+    display: block;
+    position: relative;
+    margin: 10px;
+    border: solid 2px var(--green);
+    border-radius: 10px;
+    width: 230px;
+    min-width: 20%;
+    height: 180px;
+    text-align: right;
+    background-color: white;
+    background-position: top;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: all 200ms 100ms ease;
+}
+
+.artsBox span {
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    top: auto;
+}
+
+.artsBox:after {
+    content: 'OPEN';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    text-shadow: 1px 1px 1px black;
+    opacity: 0;
+    transition: all 200ms 100ms ease;
+}
+
+.artsBox:hover {
+    border-color: var(--yellow);
+}
+
+.artsBox:hover:after {
+    opacity: 1;
+}
+
+#imageView {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    text-align: right;
+    opacity: 0;
+    z-index: 9999;
+    transition: opacity 200ms 0ms ease;
+}
+
+#imageView>a {
+    display: inline-block;
+    position: relative;
+    left: auto;
+    right: 15px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.45);
+}
+
+#historyList time {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+form[name="fm"] {
+    background-color: var(--yellow);
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    display: block;
+    position: relative;
+}
+
+.commentinput {
+    background-color: white;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    font-size: 16.5px;
+    outline: none;
+    border: none;
+    position: relative;
+    width: 300px;
+    max-width: 100%;
+}
+
+.inputlabel {
+    display: block;
+    position: relative;
+}
+
+textarea.commentinput {
+    width: 100%;
+    height: 90px;
+}
+
+.btn_submit {
+    display: inline-block;
+    position: relative;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--green);
+    color: white;
+}
+
+.commentBox {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgb(241, 243, 244);
+    box-shadow: 0px 0px 4px var(--green) inset;
+    border-radius: 10px;
+}
+
+.commentBox>span {
+    display: block;
+    font-weight: bold;
+    border-bottom: solid 1px silver;
+    margin-bottom: 2px;
+}
+
+.commentBox>div>button {
+    display: inline-block;
+    border: solid 1px gray;
+    background-color: rgb(241, 243, 244);
+    border-radius: 3px;
+    padding: 2px 8px;
+    box-sizing: border-box;
+    color: gray;
+}
+
+.commentBox>div>time {
+    display: inline-block;
+    text-align: right;
+    color: gray;
+    font-size: 0.8em;
+    margin-left: 12px;
+}
