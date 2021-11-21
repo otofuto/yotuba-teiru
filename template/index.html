@@ -36,8 +36,9 @@
         <header tabindex="0">
             <h3 style="display: block; color: var(--green); margin-left: 15px; font-size: 22px; text-shadow: 0 0 3px white;">Menu</h3>
             <div><a href="#top">プロフィール</a></div>
-            <div><a href="#profile">紹介</a></div>
+            <div><a href="#introduction">紹介</a></div>
             <div><a href="#illust">イラスト</a></div>
+            <div><a href="#movie">動画</a></div>
             <div><a href="#history">活動の記録</a></div>
             <div><a href="#comments">コメント</a></div>
             <div><a href="#about">このサイトについて</a></div>
@@ -47,14 +48,16 @@
                 <a id="top"></a>
                 <p id="loading">読込中♪</p>
                 <h1 id="name_teiru"></h1>
-                <h3 id="bio_teiru" style="display: none;">人間界に出現した<a href="https://twitter.com/beyv_japan" target="_blank" rel="noopener noreferrer">beyV</a>所属のちょっと声が低い四葉の妖精です🍀</h3>
+                <h3 id="bio_teiru" style="display: none;">人間界に出現したbeyV所属のちょっと声が低い四葉の妖精です🍀</h3>
                 <div id="icon_desc" style="display: none;">
                     <div id="icon_teiru">
-                        <img src="/st/img/icon_mini.jpg">
+                        <img src="/st/img/stand.png">
                     </div>
                     <div id="desc_teiru">
                         <p><label>名前</label>陽津葉テイル</p>
                         <p><label>よみ</label>よつばている</p>
+                        <p><label>ファンマーク</label>🍀💫</p>
+                        <p><label>所属</label><a href="https://twitter.com/beyv_japan" target="_blank" rel="noopener noreferrer">beyV</a></p>
                         <p><label>性別</label>女性</p>
                         <p><label>誕生日</label>5月29日</p>
                         <p><label>年齢</label>529歳(虚偽申告)</p>
@@ -66,16 +69,36 @@
                 </div>
                 <div id="topics">
                     <h3>最新トピック</h3>
+                    <p>11月16日からIRIAMでバナイべ参加中！</p>
+                    <p>色々考えて頑張ってるみたいだけど盛り上がりは割と普段と変わらない感じ。</p>
+                    <p>余裕ある人はぜひ応援してあげて！！！！</p>
                 </div>
             </main>
             <main>
-                <a id="profile"></a>
+                <a id="introduction"></a>
                 <h2>紹介</h2>
+                <div>
+                    <p>ママ(イラストレーター)は<a href="https://twitter.com/shigurehimari" target="_blank" rel="noopener noreferrer">時雨ひまり</a>さんです。</p>
+                    <p>レタスとか言う人もいますが、四つ葉のクローバーをモチーフにした素敵な衣装を考えてくれました。</p>
+                    <p>マシュマロを募集しているので、やることなくて暇なときに<a href="https://marshmallow-qa.com/yotuba_teiru" target="_blank" rel="noopener noreferrer">ここ</a>から投げてねー。</p>
+                    <a class="ogp" href="https://marshmallow-qa.com/yotuba_teiru"></a>
+                    <p>beyVのメンバーをTwitterで紹介しているよ！</p>
+                    <p><a href="https://twitter.com/i/events/1444309777023062019?t=XAyt1RlrPg6d4Vv1Vr6Mzg&s=09" target="_blank" rel="noopener noreferrer">ここ</a>から新しい推しに出会おう！</p>
+                </div>
             </main>
             <main>
                 <a id="illust"></a>
                 <h2>イラスト</h2>
                 <div id="artsArea"></div>
+            </main>
+            <main>
+                <a id="movie"></a>
+                <h2>動画</h2>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <div>
+                    <iframe src="https://www.youtube.com/embed/ULgpSo9E4c0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/O6it7ZGQeFw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
             </main>
             <main>
                 <a id="history"></a>
@@ -148,8 +171,8 @@
                                 clearInterval(si);
                                 document.getElementsByTagName('h1')[0].style.transform = 'rotate(-3deg)';
                                 document.getElementsByTagName('h1')[0].style.textShadow = '2px 2px 2px var(--yellow)';
-                                //document.getElementById('topics').style.display = 'block';
-                                //document.getElementById('topics').style.opacity = 1;
+                                document.getElementById('topics').style.display = 'block';
+                                document.getElementById('topics').style.opacity = 1;
                             }
                         }, 100);
                     } else {
@@ -286,6 +309,28 @@
                     let ca = document.querySelector('#commentArea .commentBox[data-id="' + o.replyto + '"] .rep');
                     if (ca != null) dispComment(o, ca);
                 }
+            });
+
+            Array.from(document.querySelectorAll('.ogp')).forEach(anc => {
+                fetch("/ogp/?url=" + anc.href).then(res => res.json())
+                .then(data => {
+                    anc.setAttribute('target', '_blank');
+                    anc.setAttribute('rel', 'noopener noreferrer');
+                    let img = document.createElement('div');
+                    img.style.backgroundImage = 'url(\'' + data.image + '\')';
+                    anc.appendChild(img);
+                    let text = document.createElement('div');
+                    anc.appendChild(text);
+                    let title = document.createElement('h4');
+                    title.innerText = data.title;
+                    text.appendChild(title);
+                    let sitename = document.createElement('span');
+                    sitename.innerText = data.site_name;
+                    text.appendChild(sitename);
+                    let description = document.createElement('div');
+                    description.innerText = data.description;
+                    text.appendChild(description);
+                });
             });
         </script>
     </body>

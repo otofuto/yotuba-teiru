@@ -199,7 +199,7 @@ blockquote:after {
     opacity: 0;
     left: -30px;
     width: 300px;
-    height: 300px;
+    height: auto;
     transition: all 500ms 0ms ease;
 }
 
@@ -455,4 +455,51 @@ textarea.commentinput {
     color: gray;
     font-size: 0.8em;
     margin-left: 12px;
+}
+
+.ogp {
+    display: block;
+    position: relative;
+    width: 400px;
+    height: 150px;
+    max-width: 100%;
+    border-radius: 10px;
+    border: solid 1px gray;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.ogp>div:nth-of-type(1) {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30%;
+    height: 100%;
+    border-right: solid 1px lightgray;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.ogp>div:nth-of-type(2) {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: calc(30% + 1px);
+    width: calc(70% - 1px);
+    height: 100%;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+.ogp>div:nth-of-type(2)>h4 {
+    margin: 0;
+}
+
+.ogp>div:nth-of-type(2)>span {
+    color: dimgray;
+    font-size: 13px;
 }
