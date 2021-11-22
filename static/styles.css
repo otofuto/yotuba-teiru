@@ -28,7 +28,7 @@ header div {
     display: none;
     position: relative;
     opacity: 0;
-    animation-name: down;
+    animation-name: slideright;
     animation-delay: 0ms;
     animation-timing-function: ease-out;
     animation-duration: 300ms;
@@ -178,6 +178,18 @@ blockquote:after {
     
     100% {
         top: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes slideright {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+
+    100% {
+        left: 0;
         opacity: 1;
     }
 }
