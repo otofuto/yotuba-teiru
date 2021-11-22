@@ -80,9 +80,9 @@
                 <div>
                     <p>ママ(イラストレーター)は<a href="https://twitter.com/shigurehimari" target="_blank" rel="noopener noreferrer">時雨ひまり</a>さんです。</p>
                     <p>レタスとか言う人もいますが、四つ葉のクローバーをモチーフにした素敵な衣装を考えてくれました。</p>
-                    <p>マシュマロを募集しているので、やることなくて暇なときに<a href="https://marshmallow-qa.com/yotuba_teiru" target="_blank" rel="noopener noreferrer">ここ</a>から投げてねー。</p>
+                    <p>マシュマロを募集しているので、やることなくて暇なときにでも投げてねー。</p>
                     <a class="ogp" href="https://marshmallow-qa.com/yotuba_teiru"></a>
-                    <p>beyVのメンバーをTwitterで紹介しているよ！</p>
+                    <p>Twitterでは広報担当としてbeyVのメンバーを紹介しているよ！</p>
                     <p><a href="https://twitter.com/i/events/1444309777023062019?t=XAyt1RlrPg6d4Vv1Vr6Mzg&s=09" target="_blank" rel="noopener noreferrer">ここ</a>から新しい推しに出会おう！</p>
                 </div>
             </main>
@@ -200,7 +200,7 @@
                 arts.forEach(art => {
                     let artsBox = document.createElement('div');
                     artsBox.setAttribute('class', 'artsBox');
-                    artsBox.style.backgroundImage = "url('/materials/art_thumb/" + art.filename + "')";
+                    artsBox.style.backgroundImage = "url('/st/art_thumb/" + art.filename + "')";
                     artsBox.setAttribute('data-filename', art.filename);
                     artsBox.setAttribute('data-url', art.url);
                     artsBox.setAttribute('onclick', 'openImage(this)');
@@ -215,7 +215,7 @@
             function openImage(elm) {
                 let filename = elm.getAttribute('data-filename');
                 let iv = document.getElementById('imageView');
-                iv.style.backgroundImage = "url('/materials/art/" + filename + "')";
+                iv.style.backgroundImage = "url('/st/art/" + filename + "')";
                 iv.style.display = 'block';
                 iv.style.opacity = 1;
                 iv.getElementsByTagName('a')[0].href = elm.getAttribute('data-url');
@@ -236,10 +236,12 @@
                     body: new FormData(document.fm)
                 }).then(res => {
                     if (res.status == 200) return res.json();
-                    else return null;
+                    else return false;
                 }).then(obj => {
-                    if (obj == null) {
-                        alert('投稿に失敗しました');
+                    if (obj == false) {
+                        alert('投稿に失敗しました。');
+                    } else if (obj == true) {
+                        location.reload();
                     } else {
                         dispComment(obj, document.getElementById('commentArea'));
                         localStorage.setItem('displayname', document.fm.displayname.value);
@@ -278,12 +280,26 @@
                 div.appendChild(repbtn);
 
                 let dt = document.createElement('time');
-                dt.innerText = obj.datetime;
+                dt.innerText = parseDt(obj.datetime);
                 div.appendChild(dt);
 
                 let reparea = document.createElement('div');
                 reparea.setAttribute('class', 'rep');
                 com.appendChild(reparea);
+            }
+
+            function parseDt(dt) {
+                let tm = new Date(dt);
+                return tm.getFullYear() + '-' +
+                    frontZero(tm.getMonth() + 1) + '-' +
+                    frontZero(tm.getDate()) + ' ' +
+                    frontZero(tm.getHours()) + ':' +
+                    frontZero(tm.getMinutes());
+            }
+
+            function frontZero(num) {
+                if (num < 10) return '0' + num;
+                return num;
             }
 
             function setReply(btn) {

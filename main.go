@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
@@ -52,6 +53,7 @@ func main() {
 
 	http.Handle("/st/", http.StripPrefix("/st/", http.FileServer(http.Dir("./static"))))
 	http.HandleFunc("/", IndexHandle)
+	http.HandleFunc("/comment/", CommentHandle)
 	http.HandleFunc("/favicon.ico", FaviconHandle)
 	http.HandleFunc("/ogpimg/", OgpImgHandle)
 	http.HandleFunc("/ogp/", OgpHandle)
@@ -94,6 +96,66 @@ func IndexHandle(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		http.Error(w, "method not allowed", 405)
+	}
+}
+
+func CommentHandle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
+
+	if r.Method == http.MethodPost {
+		r.ParseMultipartForm(32 << 20)
+		if isset(r, []string{"displayname", "email", "comment", "replyto"}) {
+			var rep int
+			if r.FormValue("replyto") == "" {
+				rep = 0
+			} else {
+				_rep, err := strconv.Atoi(r.FormValue("replyto"))
+				if err != nil {
+					http.Error(w, "replyto is not integer", 400)
+					return
+				}
+				rep = _rep
+			}
+			db := database.Connect()
+			defer db.Close()
+			sql := "insert into comments (names, comment, email, replyto, ip) values ($1, $2, $3, $4, $5)"
+			/*ins, err := db.Prepare(sql)
+			if err != nil {
+				log.Println(err)
+				http.Error(w, "sql error", 500)
+				return
+			}
+			defer ins.Close()*/
+			_, err := db.Exec(sql, r.FormValue("displayname"), r.FormValue("comment"), r.FormValue("email"), rep, r.RemoteAddr)
+			if err != nil {
+				log.Println(err)
+				http.Error(w, "failed to insert query", 500)
+				return
+			}
+			sql = "select id, names, comment, dt, replyto from comments order by id desc limit 1"
+			rows, err := db.Query(sql)
+			if err != nil {
+				log.Println(err)
+				fmt.Fprintf(w, "true")
+				return
+			}
+			defer rows.Close()
+			if rows.Next() {
+				var com Comment
+				err = rows.Scan(&com.Id, &com.Name, &com.Comment, &com.Datetime, &com.ReplyTo)
+				if err != nil {
+					log.Println(err)
+					fmt.Fprintf(w, "true")
+					return
+				}
+				bytes, _ := json.Marshal(com)
+				fmt.Fprintf(w, string(bytes))
+			} else {
+				fmt.Fprintf(w, "true")
+			}
+		} else {
+			http.Error(w, "parameters not enough", 400)
+		}
 	}
 }
 
