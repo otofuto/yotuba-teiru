@@ -5,6 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"io"
 	"io/ioutil"
 	"log"
@@ -15,6 +18,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/otofuto/yotuba-teiru/pkg/database"
+	"golang.org/x/image/draw"
 	"golang.org/x/net/html"
 )
 
@@ -57,6 +61,7 @@ func main() {
 	http.HandleFunc("/favicon.ico", FaviconHandle)
 	http.HandleFunc("/ogpimg/", OgpImgHandle)
 	http.HandleFunc("/ogp/", OgpHandle)
+	http.HandleFunc("/thumb/", ThumbHandle)
 
 	log.Println("Listening on port: " + port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
@@ -119,13 +124,6 @@ func CommentHandle(w http.ResponseWriter, r *http.Request) {
 			db := database.Connect()
 			defer db.Close()
 			sql := "insert into comments (names, comment, email, replyto, ip) values ($1, $2, $3, $4, $5)"
-			/*ins, err := db.Prepare(sql)
-			if err != nil {
-				log.Println(err)
-				http.Error(w, "sql error", 500)
-				return
-			}
-			defer ins.Close()*/
 			_, err := db.Exec(sql, r.FormValue("displayname"), r.FormValue("comment"), r.FormValue("email"), rep, r.RemoteAddr)
 			if err != nil {
 				log.Println(err)
@@ -274,6 +272,66 @@ func getAttribute(node *html.Node, attrname string) string {
 		}
 	}
 	return ""
+}
+
+func ThumbHandle(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+
+	if r.Method == http.MethodGet {
+		fname := r.URL.Path[len("/thumb/"):]
+		file, err := os.Open("./static/art/" + fname)
+		if err != nil {
+			http.Error(w, "failed to open the file", 500)
+			return
+		}
+		defer file.Close()
+		img, _, err := image.Decode(file)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		bounds := img.Bounds()
+		width, height := bounds.Dx(), bounds.Dy()
+		var newWidth, newHeight int
+		if width > 500 || height > 500 {
+			if width > height && width > 500 {
+				newWidth = 500
+				newHeight = int(500.0 / float64(width) * float64(height))
+			} else if width < height && height > 500 {
+				newHeight = 500
+				newWidth = int(500.0 / float64(height) * float64(width))
+			} else if width > 500 && width == height {
+				newWidth = 500
+				newHeight = 500
+			}
+		} else {
+			newWidth = width
+			newHeight = height
+		}
+		dest := image.NewRGBA(image.Rect(0, 0, newWidth, newHeight))
+		draw.CatmullRom.Scale(dest, dest.Bounds(), img, bounds, draw.Over, nil)
+
+		pr, pw := io.Pipe()
+		go func() {
+			if strings.HasSuffix(fname, "jpg") || strings.HasSuffix(fname, "jpeg") {
+				w.Header().Set("Content-Type", "image/jpeg")
+				err = jpeg.Encode(pw, dest, &jpeg.Options{Quality: 100})
+			} else {
+				w.Header().Set("Content-Type", "image/png")
+				err = png.Encode(pw, dest)
+			}
+			if err != nil {
+				log.Println(err)
+				pw.Close()
+				http.Error(w, "failed to encode image", 500)
+				return
+			}
+			pw.Close()
+		}()
+		io.Copy(w, pr)
+	} else {
+		http.Error(w, "method not allowed", 405)
+	}
 }
 
 //GETでは使えない

@@ -198,7 +198,8 @@ blockquote:after {
     position: relative;
     opacity: 0;
     left: -30px;
-    width: 300px;
+    width: 340px;
+    max-width: 100%;
     height: auto;
     transition: all 500ms 0ms ease;
 }
@@ -327,6 +328,7 @@ blockquote:after {
     position: absolute;
     bottom: 0;
     top: auto;
+    text-shadow: 1px 1px white;
 }
 
 .artsBox:after {
