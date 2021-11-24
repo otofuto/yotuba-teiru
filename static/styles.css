@@ -140,9 +140,10 @@ main::-webkit-scrollbar {
 
 blockquote {
     position: relative;
-    background-color: rgb(235, 235, 235);
+    background-color: transparent;
     width: fit-content;
     height: max-content;
+    z-index: 0;
 }
 
 blockquote:after {
@@ -157,6 +158,12 @@ blockquote:after {
     color: rgba(100, 100, 0, 0.3);
     font-size: 2em;
     text-align: center;
+    background-color: rgb(235, 235, 235);
+    z-index: -1;
+}
+
+.twitter-tweet img {
+    width: 100%;
 }
 
 .down {

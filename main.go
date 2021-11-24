@@ -292,17 +292,18 @@ func ThumbHandle(w http.ResponseWriter, r *http.Request) {
 		}
 		bounds := img.Bounds()
 		width, height := bounds.Dx(), bounds.Dy()
+		maxsize := 300
 		var newWidth, newHeight int
-		if width > 500 || height > 500 {
-			if width > height && width > 500 {
-				newWidth = 500
-				newHeight = int(500.0 / float64(width) * float64(height))
-			} else if width < height && height > 500 {
-				newHeight = 500
-				newWidth = int(500.0 / float64(height) * float64(width))
-			} else if width > 500 && width == height {
-				newWidth = 500
-				newHeight = 500
+		if width > maxsize || height > maxsize {
+			if width > height && width > maxsize {
+				newWidth = maxsize
+				newHeight = int(float64(maxsize) / float64(width) * float64(height))
+			} else if width < height && height > maxsize {
+				newHeight = maxsize
+				newWidth = int(float64(maxsize) / float64(height) * float64(width))
+			} else if width > maxsize && width == height {
+				newWidth = maxsize
+				newHeight = maxsize
 			}
 		} else {
 			newWidth = width
